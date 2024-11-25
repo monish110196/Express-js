@@ -1,4 +1,4 @@
-const Book = require("./book");
+const Laptop = require("./laptop");
 var connectToDB = require("./mongoDB");
 var express = require('express');
 var app = express();
@@ -21,25 +21,25 @@ app.get('/', function (req, res) {
   res.send("Helloworld");
 });
 
-let saveBook = async (book) => {
-  let bookObj = new Book();
-  bookObj.title = book?.title;
-  bookObj.author = book?.author;
-  bookObj.publishedYear = book?.publishedYear;
-  bookObj.genre = book?.genre;
-  bookObj.price = book?.price;
-  bookObj.stock = book?.stock
-  await bookObj.save();
+let saveLaptop = async (laptop) => {
+  let laptopObj = new Laptop();
+  laptopObj.brand = laptop?.brand;
+  laptopObj.model = laptop?.model;
+  laptopObj.processor = laptop?.processor;
+  laptopObj.ram = laptop?.ram;
+  laptopObj.storage = laptop?.storage;
+  laptopObj.price = laptop?.price
+  await laptopObj.save();
 }
  app.post('/', function (req, res) {
-  let book = req.body;
-  console.log("book -->", book);
-  saveBook(book).then(data => {
+  let laptop = req.body;
+  console.log("laptop -->", laptop);
+  saveLaptop(laptop).then(data => {
     console.log("data -->",data)
     res.send(data)
   }).catch(err => { 
-    console.error("Error saving book:", err);
-    res.status(500).send("Error saving book");
+    console.error("Error saving laptop:", err);
+    res.status(500).send("Error saving laptop");
   });
 });
 
