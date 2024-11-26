@@ -9,7 +9,7 @@ class LaptopService {
 
   
   async getLaptopById(laptopId) {
-    return await laptopDao.findById(laptopId);
+    return await laptopDao.getById(laptopId);
   }
 
   
