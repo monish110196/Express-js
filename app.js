@@ -1,69 +1,27 @@
-const Book = require("./book");
-var connectToDB = require("./mongoDB");
-var express = require('express');
-var app = express();
+const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const bookRoutes = require('./book/bookRoutes');
+const laptopRoutes = require('./laptop/laptopRoutes');
 const PORT = process.env.PORT || 5000;
-app.use(express.json())
+const app = express();
+
+// Middleware to parse JSON requests
+app.use(express.json());
 app.use(bodyParser.json());
-const axios = require('axios');
 
+// Connect to MongoDB
+mongoose.connect('mongodb+srv://dhinavollmoon:dtXO6D8fFoQZ6qxI@dhina-mongoose.5bebs.mongodb.net/monish?retryWrites=true&w=majority&appName=dhina-mongoose',
+     { useNewUrlParser: true,
+         useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log('MongoDB connection error:', err));
 
-connectToDB().then(() => {
-  
-  app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-  });
-}).catch((err) => {
-  console.error('Failed to start the server:', err);
-});
+// Use the routes
+app.use('/api', bookRoutes);
+app.use('/api', laptopRoutes);
 
-
-app.get('/books', async (req, res) => {
-    try {
-        const books = await Book.find();
-        res.json(books);
-    } catch (error) {
-        console.error('Error fetching books:', error);
-        res.status(500).json({ error: 'Error retrieving books' });
-    }
-});
-
-app.get('/books/:id', async (req, res) => {
-    try {
-        const book = await Book.findById(req.params.id);
-        if (book) {
-            res.json(book);
-        } else {
-            res.status(404).json({ error: 'Book not found' });
-        }
-    } catch (error) {
-        res.status(500).json({ error: 'Error retrieving the book' });
-    }
-});
-app.put('/books/:id', async (req, res) => {
-  try {
-      const updatedBook = await Book.findByIdAndUpdate(
-          req.params.id,req.body,{ new: true });
-
-      if (updatedBook) {
-          res.json({ message: 'Book updated successfully', book: updatedBook });
-      } else {
-          res.status(404).json({ error: 'Book not found' });
-      }
-  } catch (error) {
-      res.status(500).json({ error: 'Error updating the book' });
-  }
-});
-app.delete('/books/:id', async (req, res) => {
-  try {
-      const deletedBook = await Book.findByIdAndDelete(req.params.id);
-      if (deletedBook) {
-          res.json({ message: 'Book deleted successfully', book: deletedBook });
-      } else {
-          res.status(404).json({ error: 'Book not found' });
-      }
-  } catch (error) {
-      res.status(500).json({ error: 'Error deleting the book' });
-  }
+// Start the server
+app.listen(5000, () => {
+  console.log('Server is running on http://localhost:5000');
 });
