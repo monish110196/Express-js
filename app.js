@@ -5,7 +5,7 @@ const bookRoutes = require('./book/bookRoutes');
 const laptopRoutes = require('./laptop/laptopRoutes');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 
 // Middleware
 app.use(bodyParser.json());
