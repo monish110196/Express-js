@@ -1,11 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const bookRoutes = require('./book/bookRoutes');
-const laptopRoutes = require('./laptop/laptopRoutes');
+const bookRoutes = require('./routes/bookRoutes');
+const laptopRoutes = require('./routes/laptopRoutes');
+const studentRoutes = require('./routes/studentRoutes');
+
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = 4000;
 
 // Middleware
 app.use(bodyParser.json());
@@ -20,6 +22,7 @@ mongoose.connect("mongodb+srv://dhinavollmoon:dtXO6D8fFoQZ6qxI@dhina-mongoose.5b
 // Routes
 app.use('/api', bookRoutes);
 app.use('/api', laptopRoutes);
+app.use('/api', studentRoutes);
 
 // Start the server
 app.listen(PORT, () => {
