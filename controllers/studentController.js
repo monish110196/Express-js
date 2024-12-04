@@ -6,6 +6,7 @@ class StudentController
   async createStudent(req, res) {
     
     try {
+      console.log(req.body);
       const student = await studentService.createStudent(req.body);
       res.status(201).json(student);
     } catch (err) {

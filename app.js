@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const bookRoutes = require('./routes/bookRoutes');
 const laptopRoutes = require('./routes/laptopRoutes');
 const studentRoutes = require('./routes/studentRoutes');
+const userRoutes = require('./routes/userRoutes');
+const profileRoutes = require('./routes/profileRoutes');
 
 
 const app = express();
@@ -23,8 +25,10 @@ mongoose.connect("mongodb+srv://dhinavollmoon:dtXO6D8fFoQZ6qxI@dhina-mongoose.5b
 app.use('/api', bookRoutes);
 app.use('/api', laptopRoutes);
 app.use('/api', studentRoutes);
+app.use('/users', userRoutes);
+app.use('/profiles', profileRoutes);
 
-// Start the server
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
