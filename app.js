@@ -5,7 +5,9 @@ const bookRoutes = require('./routes/bookRoutes');
 const laptopRoutes = require('./routes/laptopRoutes');
 const studentRoutes = require('./routes/studentRoutes');
 const userRoutes = require('./routes/userRoutes');
-const profileRoutes = require('./routes/profileRoutes');
+const profileRoutes = require('./routes/profileRoutes')
+const postRoutes = require('./routes/postRoutes');
+const projectRoutes = require('./routes/projectRoutes');
 
 
 const app = express();
@@ -25,8 +27,10 @@ mongoose.connect("mongodb+srv://dhinavollmoon:dtXO6D8fFoQZ6qxI@dhina-mongoose.5b
 app.use('/api', bookRoutes);
 app.use('/api', laptopRoutes);
 app.use('/api', studentRoutes);
-app.use('/users', userRoutes);
-app.use('/profiles', profileRoutes);
+app.use('/user', userRoutes);
+app.use('/profile', profileRoutes);
+app.use('/post', postRoutes);
+app.use('/project', projectRoutes);
 
 
 app.listen(PORT, () => {

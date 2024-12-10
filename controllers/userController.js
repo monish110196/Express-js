@@ -1,35 +1,49 @@
-const userService = require('../services/userService');
+const UserService = require('../services/userService');
 
-const createUser = async (req, res) => {
-    try {
-        const { name, email, age, address } = req.body;
-
-        const { user, profile } = await userService.createUserWithProfile(
-            { name, email },
-            { age, address }
-        );
-
-        res.status(201).json({ message: 'User and Profile created', user, profile });
-    } catch (error) {
-        res.status(500).json({ message: 'Error creating user', error });
-    }
+exports.createUser = async (req, res) => {
+  try {
+    const user = await UserService.createUser(req.body);
+    res.status(201).json({ message: 'User created successfully', user });
+  } catch (err) {
+    res.status(400).json({ message: 'Error creating user', error: err.message });
+  }
 };
 
-const getUser = async (req, res) => {
-    try {
-        const user = await userService.getUserWithProfile(req.params.id);
-
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching user', error });
-    }
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await UserService.getAllUsers();
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching users', error: err.message });
+  }
 };
 
-module.exports = {
-    createUser,
-    getUser,
+exports.updateUser = async (req, res) =>{
+  try {
+    const user  = await UserService.updateUser(req.params.id, req.body);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.json(user);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+
+exports.deleteUser = async (req, res) => {
+  try {
+    const user = await UserService.deleteUser(req.params.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.json({ message: 'User deleted' });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+exports.addProjectToUser = async (req, res) => {
+  try {
+    const user = await UserService.addProjectToUser(req.params.id, req.body.projectId);
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json({ message: 'Error adding project to user', error: err.message });
+  }
 };

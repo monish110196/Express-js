@@ -2,6 +2,8 @@ const Laptop = require('../models/laptopModel');
 
 class LaptopDao {
 
+
+  
   async create(laptopData) {
     const laptop = new Laptop(laptopData);
     return await laptop.save();

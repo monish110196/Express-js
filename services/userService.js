@@ -1,19 +1,22 @@
 const userDao = require('../daos/userDao');
-const profileDao = require('../daos/profileDao');
 
-const createUserWithProfile = async (userData, profileData) => {
-    const user = await userDao.createUser(userData);
-    const profile = await profileDao.createProfile({ ...profileData, user: user._id });
-
-    user.profile = profile._id;
-    await user.save();
-
-    return { user, profile };
+exports.createUser = async (userData) => {
+  return await userDao.createUser(userData);
 };
 
-const getUserWithProfile = (userId) => userDao.getUserById(userId);
+exports.getAllUsers = async () => {
+  return await userDao.getAllUsers();
+};
 
-module.exports = {
-    createUserWithProfile,
-    getUserWithProfile,
+exports.updateUser = async (userId, userData) => {
+  return await userDao.update(userId, userData);
+};
+
+
+exports.deleteUser = async (userId) => {
+  return await userDao.delete(userId);
+};
+
+exports.addProjectToUser = async (userId, projectId) => {
+  return await userDao.addProjectToUser(userId, projectId);
 };

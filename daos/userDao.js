@@ -1,13 +1,43 @@
 const User = require('../models/userModel');
 
-const createUser = (userData) => User.create(userData);
+exports.
+createUser = async (userData) => {
+    const user = new User(userData);
+    return await user.save();
+  };
+  
+  exports.getAllUsers = async () => {
+    return await User.find()
+      .populate('profile')
+      .populate('posts')
+      .populate('projects');
+  };
+  
+  exports.linkProfile = async (userId, profileId) => {
+    return await User.findByIdAndUpdate(userId, { profile: profileId });
+  };
+  
+  exports.addPost = async (userId, postId) => {
+    return await User.findByIdAndUpdate(userId, { $push: { posts: postId } }); 
+  };
 
-const getUserById = (userId) => User.findById(userId); 
+  exports.update = async (userId, userData) => {
+    return await User.findByIdAndUpdate(userId, userData, { new: true });
+  }
 
-const updateUser = (userId, updateData) => User.findByIdAndUpdate(userId, updateData, { new: true });
+ 
+  exports.delete = async (userId) => {
+    return await User.findByIdAndDelete(userId);
+  }
 
-module.exports = {
-    createUser,
-    getUserById,
-    updateUser,
-};
+  exports.addProjectToUser = async (userId, projectId) => {
+    return await User.findByIdAndUpdate(
+      userId,
+      { $addToSet: { projects: projectId } }, 
+      { new: true }
+    ).populate('projects');
+  };
+  
+
+   //Use $addToSet to avoid duplicates
+   //$push: Creates an array of values.
