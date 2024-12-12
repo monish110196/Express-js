@@ -1,11 +1,20 @@
 const userDao = require('../daos/userDao');
 
 exports.createUser = async (userData) => {
-  return await userDao.createUser(userData);
+  try{
+    return await serDao.createUser(userData);
+  } catch (error){
+   console.log("success 1")
+    throw error; // Re-throw the error 
+  }
 };
 
 exports.getAllUsers = async () => {
-  return await userDao.getAllUsers();
+  try{
+    return await userDao.getAllUsers();
+  }catch (error) {
+    throw error;
+  }
 };
 
 exports.updateUser = async (userId, userData) => {

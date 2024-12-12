@@ -1,16 +1,28 @@
 const User = require('../models/userModel');
+const CustomError = require('../utils/customError');
 
 exports.
 createUser = async (userData) => {
-    const user = new User(userData);
+  try{
+    const user = new ser(userData);
+    if (!user) throw new CustomError("User not save", 404);
     return await user.save();
+  }catch (error) {
+    console.log("success 2")
+    throw error;  // Propagate the error to the service layer
+  }
   };
   
   exports.getAllUsers = async () => {
-    return await User.find()
+    try{ 
+      return await User.find()
       .populate('profile')
       .populate('posts')
       .populate('projects');
+    }catch (error){
+      throw error;
+    }
+   
   };
   
   exports.linkProfile = async (userId, profileId) => {
