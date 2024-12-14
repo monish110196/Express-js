@@ -1,0 +1,20 @@
+2024-12-13 16:27:02 [INFO]: Incoming request: GET /user
+2024-12-13 16:27:02 [INFO]: GET /users request received
+2024-12-13 16:27:02 [INFO]: Controller: Fetching all users
+2024-12-13 16:27:02 [ERROR]: Controller: Error fetching users - userService is not defined
+2024-12-13 16:33:47 [INFO]: Incoming request: GET /user
+2024-12-13 16:33:47 [INFO]: GET /users request received
+2024-12-13 16:33:47 [INFO]: Controller: Fetching all users
+2024-12-13 16:33:47 [INFO]: Service: Fetching users from DAO
+2024-12-13 16:33:47 [INFO]: DAO: Querying database for users
+2024-12-13 16:33:49 [INFO]: DAO: Found 7 users in the database
+2024-12-13 16:33:49 [INFO]: Service: Retrieved 7 users
+2024-12-13 16:33:49 [INFO]: Controller: Successfully fetched users
+2024-12-13 18:21:09 [INFO]: Incoming request: GET /user
+2024-12-13 18:21:10 [INFO]: GET /users request received
+2024-12-13 18:21:10 [INFO]: Controller: Fetching all users
+2024-12-13 18:21:10 [INFO]: Service: Fetching users from DAO
+2024-12-13 18:21:10 [INFO]: DAO: Querying database for users
+2024-12-13 18:21:11 [INFO]: DAO: Found 7 users in the database
+2024-12-13 18:21:11 [INFO]: Service: Retrieved 7 users
+2024-12-13 18:21:12 [INFO]: Controller: Successfully fetched users
