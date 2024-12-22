@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  content: { type: String, required: true },
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+  address: { type: String, required: true },
+  phoneNumber: { type: Number, required: true },
+  users: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 });
 
 module.exports = mongoose.model('Post', postSchema);
+
+
+ //employee: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee' }

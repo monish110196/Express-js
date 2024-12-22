@@ -8,6 +8,6 @@ const studentSchema = new mongoose.Schema({
 });
 studentSchema.index({ Name: "text", email: "text", phoneNumber: "text", dateOfBirth: "text" });
 
-const student = mongoose.model('Student', studentSchema);
+const Student = mongoose.model('Student', studentSchema);
 
-module.exports = student;
+module.exports = Student;

@@ -3,8 +3,8 @@ const student = require('../models/studentModel');
 class StudentDao {
 
   async create(studentData) {
-    const student = new student(studentData);
-    return await student.save();
+    const Student = new student(studentData);
+    return await Student.save();
   }
 
   async searchStudents(searchTerm) {

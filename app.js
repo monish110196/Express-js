@@ -1,4 +1,5 @@
 const express = require('express');
+const logger = require('./utils/logger');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const errorHandler = require('./middleware/errorHandler')
@@ -19,6 +20,12 @@ const PORT = 4000;
 app.use(bodyParser.json());
 app.use(express.json());
 
+app.use((req, res, next) => {
+  logger.info(`Incoming request: ${req.method} ${req.url}`);
+  next();
+});
+
+
 
 // MongoDB Connection
 mongoose.connect("mongodb+srv://dhinavollmoon:dtXO6D8fFoQZ6qxI@dhina-mongoose.5bebs.mongodb.net/monish?retryWrites=true&w=majority&appName=dhina-mongoose",  
@@ -36,18 +43,31 @@ app.use('/post', postRoutes);
 app.use('/project', projectRoutes);
 app.use(errorHandler);
 
-process.on('uncaughtException', (err) => {
-  console.error("Uncaught Exception:", err);
-  process.exit(1);
+app.use((err, req, res, next) => {
+  logger.error(`Error occurred: ${err.message}`);
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message || 'Internal Server Error',
+  });
 });
-
-process.on('unhandledRejection', (reason) => {
-  console.error("Unhandled Rejection:", reason);
-  process.exit(1);
-});
-
 
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
+module.exports = app;
+
+
+
+
+
+// process.on('uncaughtException', (err) => {
+//   console.error("Uncaught Exception:", err);
+//   process.exit(1);
+// });
+
+// process.on('unhandledRejection', (reason) => {
+//   console.error("Unhandled Rejection:", reason);
+//   process.exit(1);
+// });
