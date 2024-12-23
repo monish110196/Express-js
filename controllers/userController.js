@@ -4,12 +4,27 @@ const logger = require('../utils/logger');
 exports.createUser = async (req, res, next) => {
   try {
     const user = await UserService.createUser(req.body);
+    
     res.status(201).json({ message: 'User created successfully', user });
   } catch (error) {
     next(error); // Pass the error to the error-handling middleware
     //res.status(400).json({ message: 'Error creating user', error: err.message });
   }
 };
+
+exports.getUserById = async (req, res) => {
+  
+    try {
+      const User = await UserService.getUserById(req.params.id);
+      if (!User) return res.status(404).json({ message: 'User not found' });
+      res.json(User);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  }
+
+
+
 
 exports.getAllUsers = async (req, res, next) => { 
   logger.info('Controller: Fetching all users');

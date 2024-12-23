@@ -9,6 +9,15 @@ exports.createUser = async (userData) => {
   }
 };
 
+exports.getUserById = async(UserId) => {
+  try{
+  return await userDao.getById(UserId);
+}catch (error){
+  throw error; // Re-throw the error 
+}
+};
+
+
 exports.getAllUsers = async () => {
   logger.info('Service: Fetching users from DAO');
   try {

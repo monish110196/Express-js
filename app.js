@@ -2,6 +2,7 @@ const express = require('express');
 const logger = require('./utils/logger');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const authRoutes = require("./routes/authRoutes");
 const errorHandler = require('./middleware/errorHandler')
 const bookRoutes = require('./routes/bookRoutes');
 const laptopRoutes = require('./routes/laptopRoutes');
@@ -10,10 +11,24 @@ const userRoutes = require('./routes/userRoutes');
 const profileRoutes = require('./routes/profileRoutes')
 const postRoutes = require('./routes/postRoutes');
 const projectRoutes = require('./routes/projectRoutes');
+const cors = require('cors');
 
 
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 4001
+
+// const whitelist = ['http://localhost:3000', 'https://www.google.com'];
+// const corsOptions = {
+//   origin:(origin, callback) =>{
+//     if(whitelist.indexOf(origin)!== -1 || !origin) {
+//       callback(null,true)
+//     }else{
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   optionSuccessStatus : 200
+// }
+// app.use(cors(corsOptions))
 
 // Middleware
 
@@ -41,22 +56,16 @@ app.use('/user', userRoutes);
 app.use('/profile', profileRoutes);
 app.use('/post', postRoutes);
 app.use('/project', projectRoutes);
+app.use("/auth", authRoutes);
 app.use(errorHandler);
 
-app.use((err, req, res, next) => {
-  logger.error(`Error occurred: ${err.message}`);
-  res.status(err.status || 500).json({
-    success: false,
-    message: err.message || 'Internal Server Error',
-  });
-});
+
 
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
 
-module.exports = app;
 
 
 
@@ -70,4 +79,13 @@ module.exports = app;
 // process.on('unhandledRejection', (reason) => {
 //   console.error("Unhandled Rejection:", reason);
 //   process.exit(1);
+// });
+
+
+// app.use((err, req, res, next) => {
+//   logger.error(`Error occurred: ${err.message}`);
+//   res.status(err.status || 500).json({
+//     success: false,
+//     message: err.message || 'Internal Server Error',
+//   });
 // });

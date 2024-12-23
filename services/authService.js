@@ -5,12 +5,12 @@ require("dotenv").config();
 
 class AuthService {
   // Register user
-  async registerUser(name, email, password, role) {
+  async registerUser(name, email, password, role = "user") {
     const existingUser = await userDao.findUserByEmail(email);
     if (existingUser) throw new Error("User already exists");
 
-    const hashedPassword = await bcrypt.hash(password, 5);
-    return await userDao.createUser({ name, email, password: hashedPassword });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    return await userDao.createUser({ name, email, password: hashedPassword, role});
   }
 
   // Login user
